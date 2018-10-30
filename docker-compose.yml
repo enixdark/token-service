@@ -1,0 +1,26 @@
+version: '3'
+services:
+  token_service:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    command: mix phx.server
+    environment:
+      MIX_ENV: "development"
+      MONGO_DATABASE: "token"
+      MONGO_USERNAME: "admin"
+      MONGO_PASSWORD: "admin2018"
+      MONGO_HOST: db
+      MONGO_PORT: 27017
+      # SENTRY_DSN:
+  db:
+    image: mongo:latest
+    # restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin2018
+      MONGO_INITDB_DATABASE: token
+    ports:
+      - "27017:27017"
